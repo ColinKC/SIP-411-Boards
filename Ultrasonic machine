@@ -1,0 +1,93 @@
+#include <AccelStepper.h>
+
+#define pul1 2
+#define dir1 3
+#define pul2 4
+#define dir2 5
+#define pul3 6
+#define dir3 7
+
+AccelStepper platform(1,pul1, dir1);
+AccelStepper armextend(1, pul2, dir2);
+AccelStepper armvert(1, pul3, dir3);
+
+void setup(){
+  platform.setMaxSpeed(125);
+  platform.setAcceleration(75);
+
+  armextend.setMaxSpeed(290);
+  armextend.setAcceleration(100);
+
+  armvert.setMaxSpeed(500);
+  armvert.setAcceleration(200);
+
+
+}
+
+void loop(){
+
+  scanOne();
+  scanTwo();
+  scanThree();
+  scanFour();
+  scanFive();
+
+  armextend.runToNewPosition(0);
+  armvert.runToNewPosition(0);
+
+}
+
+void scanOne(){
+  platform.runToNewPosition(0);
+  armvert.runToNewPosition(3000);
+  delay(500);
+  armextend.runToNewPosition(1900);
+  delay(1000);
+  platform.runToNewPosition(950);
+
+}
+
+void scanTwo(){
+  armextend.runToNewPosition(900);
+  delay(500);
+  platform.runToNewPosition(800);
+  armvert.runToNewPosition(4800);
+  armextend.runToNewPosition(1900);
+  delay(1000);
+  platform.runToNewPosition(1750);
+
+}
+
+void scanThree(){
+  armextend.runToNewPosition(900);
+  delay(500);
+  platform.runToNewPosition(1600);
+  armvert.runToNewPosition(6430);
+  delay(500);
+  armextend.runToNewPosition(1900);
+  delay(1000);
+  platform.runToNewPosition(2550);
+
+}
+
+void scanFour(){
+  armextend.runToNewPosition(900);
+  delay(500);
+  platform.runToNewPosition(2400);
+  armvert.runToNewPosition(7854);
+  delay(500);
+  armextend.runToNewPosition(1900);
+  delay(1000);
+  platform.runToNewPosition(3350);
+}
+
+void scanFive(){
+  armextend.runToNewPosition(900);
+  delay(500);
+  platform.runToNewPosition(3200);
+  armvert.runToNewPosition(8730);
+  delay(500);
+  armextend.runToNewPosition(1900);
+  delay(1000);
+  platform.runToNewPosition(4150);
+}
