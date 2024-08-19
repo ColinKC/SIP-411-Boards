@@ -1,0 +1,43 @@
+const int trigPin = 8;
+const int echoPin = 7;
+const int buzz = 5;
+const int vib = 2;
+
+long duration;
+float distance;
+
+void setup() {
+  pinMode(trigPin, OUTPUT); //set the trigPin as an Output
+  pinMode(echoPin, INPUT);// sets the echoPin as an Input
+  pinMode(buzz, OUTPUT);
+  pinMode(vib, OUTPUT);
+  Serial.begin(9600); //starts that serial communication
+
+}
+
+void loop() {
+  //clears the trigPin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  //sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  //reads the echoPin, returns the sound wave travel time int microseconds
+  duration = pulseIn(echoPin, HIGH);
+  //calculating the distance on the serial monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
+    if(distance < 70){
+      Serial.print(distance);
+      Serial.println("Object Approaching");
+      digitalWrite(vib,HIGH);
+      digitalWrite(buzz,HIGH);
+      delay(100);
+
+      digitalWrite(buzz,LOW);
+      digitalWrite(vib,LOW);
+      for (int i= (distance-40); i>0; i--)
+      delay(10);
+    }
+}
