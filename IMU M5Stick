@@ -1,0 +1,86 @@
+#include <M5StickCPlus.h>
+#define LED_BUILTIN 10;
+
+float accX = 0.0F;
+float accY = 0.0F;
+float accZ = 0.0F;
+
+float maxX = 0.0F;
+float maxY = 0.0F;
+float maxZ = 0.0F;
+
+float gyroX = 0.0F;
+float gyroY = 0.0F;
+float gyroZ = 0.0F;
+
+float pitch = 0.0F;
+float roll  = 0.0F;
+float yaw   = 0.0F;
+
+/* After M5StickC Plus is started or reset
+  the program in the setUp () function will be run, and this part will only be
+  run once. 在 M5StickC Plus
+   */
+void setup() {
+    M5.begin();             // Init M5StickC Plus.  M5StickC Plus
+    M5.Imu.Init();          // Init IMU. 
+    M5.Lcd.setRotation(3);  // Rotate the screen. 
+    M5.Lcd.fillScreen(BLACK);
+    M5.Lcd.setTextSize(1);
+    M5.Lcd.setCursor(80, 15);  // set the cursor location.  
+    M5.Lcd.println("IMU TEST");
+    M5.Lcd.setCursor(30, 30);
+    M5.Lcd.println("  X       Y       Z");
+    M5.Lcd.setCursor(30, 70);
+    M5.Lcd.println("  Pitch   Roll    Yaw");
+    M5.Lcd.setCursor(30, 100);
+    M5.Lcd.println(" maxX     maxY     maxZ");
+    pinMode (10, OUTPUT);
+}
+
+/* After the program in setup() runs, it runs the program in loop()
+The loop() function is an infinite loop in which the program runs repeatedly
+setup()loop()
+loop()*/
+void loop() {
+    static float temp = 0;
+    M5.IMU.getGyroData(&gyroX, &gyroY, &gyroZ);
+    M5.IMU.getAccelData(&accX, &accY, &accZ);
+    M5.IMU.getAhrsData(&pitch, &roll, &yaw);
+      if(accX > maxX){maxX = accX;}
+      if(accY > maxY){maxY = accY;}
+      if(accZ > maxZ){maxZ = accZ;}
+    M5.IMU.getTempData(&temp);
+    M5.Lcd.setCursor(30, 40);
+    M5.Lcd.printf("%6.2f  %6.2f  %6.2f      ", gyroX, gyroY, gyroZ);
+    M5.Lcd.setCursor(170, 40);
+    M5.Lcd.print("o/s");
+    M5.Lcd.setCursor(30, 50);
+    M5.Lcd.printf(" %5.2f   %5.2f   %5.2f   ", accX, accY, accZ);
+    M5.Lcd.setCursor(170, 50);
+    M5.Lcd.print("G");
+    M5.Lcd.setCursor(30, 80);
+    M5.Lcd.printf(" %5.2f   %5.2f   %5.2f   ", pitch, roll, yaw);
+
+    M5.Lcd.setCursor(30, 110);
+    M5.Lcd.printf(" %5.2f   %5.2f   %5.2f   ", maxX, maxY, maxZ);
+    M5.Lcd.setCursor(170, 110);
+    M5.Lcd.print("max");
+    delay(600);
+    digitalWrite (10, HIGH);
+    if(accX >= maxX)  // turn on the LED
+   //delay(600); // wait for half a second or 500 milliseconds
+    digitalWrite (10, LOW); // turn off the LED
+    if(accX < maxX)// turn off the LED
+   //delay(400); // wait for half a second or 500 milliseconds
+    digitalWrite (10, HIGH);
+    if(accY >= maxY)  // turn on the LED
+    digitalWrite (10, LOW); // turn off the LED
+    if(accY < maxY)// turn off the LED
+    digitalWrite (10, HIGH);
+    if(accZ >= maxZ)  // turn on the LED
+    digitalWrite (10, LOW); // turn off the LED
+    if(accZ < maxZ)// turn off the LED
+  m5.update();
+
+}
