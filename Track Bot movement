@@ -1,0 +1,68 @@
+int Pin1 = 10;
+int Pin9 = 9;
+int Pin2 = 3;
+int Pin7 = 4;
+int Pin5 = 5;
+int Pin10 = 6;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(Pin1, INPUT);
+  pinMode(Pin9, INPUT);
+  pinMode(Pin2, INPUT);
+  pinMode(Pin7, INPUT);
+  pinMode(Pin5, INPUT);
+  pinMode(Pin10, INPUT);
+
+}
+
+void loop() {
+  forward();
+  delay(11800);
+  backwards();
+  delay(11800);
+  clockwise();
+  delay(3600);
+  brake();
+  delay(2000);
+  counterclockwise();
+  delay(3600);
+  brake();
+  delay(20000);
+
+}
+
+void forward(){
+  digitalWrite(Pin2, HIGH);
+  digitalWrite(Pin7, HIGH);
+  digitalWrite(Pin5, LOW);
+  digitalWrite(Pin10, LOW);
+}
+
+void backwards(){
+  digitalWrite(Pin2, LOW);
+  digitalWrite(Pin7, LOW);
+  digitalWrite(Pin5, HIGH);
+  digitalWrite(Pin10, HIGH);
+}
+
+void clockwise(){
+  digitalWrite(Pin2, LOW);
+  digitalWrite(Pin7, HIGH);
+  digitalWrite(Pin5, HIGH);
+  digitalWrite(Pin10, LOW);
+}
+
+void brake(){
+  digitalWrite(Pin2, LOW);
+  digitalWrite(Pin7, LOW);
+  digitalWrite(Pin5, LOW);
+  digitalWrite(Pin10, LOW);
+}
+
+void counterclockwise(){
+  digitalWrite(Pin2, HIGH);
+  digitalWrite(Pin7, LOW);
+  digitalWrite(Pin5, LOW);
+  digitalWrite(Pin10, HIGH);
+}
