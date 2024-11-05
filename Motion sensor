@@ -1,0 +1,48 @@
+
+int inputPin = D0;              // choose the input pin (for PIR sensor)
+int ledPin = D1;                // LED Pin
+int pirState = LOW;             // we start, assuming no motion detected
+int val = 0;                    // variable for reading the pin status
+
+int calibrateTime = 5000;      
+
+void setup() {
+    pinMode(ledPin, OUTPUT);
+    pinMode(inputPin, INPUT);     
+}
+
+void loop() {
+
+   if (calibrated()) {
+    readTheSensor();
+
+       reportTheData();
+    }
+}
+
+void readTheSensor() {
+    val = digitalRead(inputPin);
+}
+
+bool calibrated() {
+    return millis() - calibrateTime > 0;
+}
+
+void setLED(int state) {
+    digitalWrite(ledPin, state);
+}
+
+void reportTheData() {
+    if (val == HIGH) {
+
+        if (pirState == LOW) {
+                pirState = HIGH;
+          setLED(pirState);
+        }
+    } else {
+        if (pirState == HIGH) {
+          pirState = LOW;
+          setLED(pirState);
+        }
+    }
+}
